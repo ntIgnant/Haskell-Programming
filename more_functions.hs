@@ -13,6 +13,7 @@ add (x, y) = x + y
 
 -- Curried functions are the ones that take more than 1 argument | one argument at a time and return a fuction
 -- e.g
-
-
-
+add' :: Int -> Int -> Int -- type definiton | this functon takes two args ints, and returns an int
+add' x y = x + y
+-- for this function add', haskell treats it internally as this:
+-- add' :: Int -> (Int -> Int) | so it really takes one arg, and returns a new function
