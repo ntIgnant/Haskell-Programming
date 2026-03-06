@@ -35,8 +35,27 @@ min_max_avg (name, v1, v2, v3) =
  in
   (name, minVal, maxVal, avgGrade)
 
-student_grades = ("Alice", 85, 55, 62.5) -- These are just the grades of one student (for now)
+student_grades = [("Alice", 85.0, 55.0, 62.5), ("Bob", 45.0, 65.3, 72.0), ("Charlie", 58.0, 82.0, 45.0)] -- List of tuples, each tuple contains a student record
 
 -- Function call
-result = min_max_avg student_grades
+get_results :: (Ord a, Fractional a) => [(String, a, a, a)] -> [(String, a, a, a)]
+
+-- Function call using map
+get_results xs = map min_max_avg xs -- apply min_max_avg to each value of the list
+
+-- TASK 3
+
+-- Example of GUARDS '|'
+
+-- function args
+-- | condition1 = result1
+-- | condition2 = result2
+-- | otherwise  = default_result
+
+
+insert :: Ord a => a -> [a] -> [a] -- Ord are the values that have 'order' capabilities
+insert x [] = [x] -- Base case for the recursion
+insert x (y:ys)
+ | x <= y = x:y:ys -- ':' sends the value to the last index, like append. If x<=y, then insert x before y
+ | otherwise = y : insert x ys -- otherwise, keep y and continue inserting x in the rest of the list (recursion)
 
