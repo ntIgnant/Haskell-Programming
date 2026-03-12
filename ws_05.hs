@@ -100,6 +100,25 @@ addRecord rec (Database records) = Database(rec:records) -- Append record to the
 
 
 findScoreById :: Int -> Database -> Maybe Int -- Type definition, may return St grade
-findScoreById id (Database records) =
- lookup id [tuple | Record tuple <- records]
+findScoreById id (Database records) = findInRecords id records -- unwrap the list and pass it to another function
 
+findInRecords :: Int -> [StuRecord] -> Maybe Int -- Type definition for the function
+findInRecords _ [] = Nothing -- Basecase for the recursion
+findInRecords sid (Record (id, score) : xs) -- pattern matching for each record in the list
+					  -- IMPORTANT: ...:xs splits the list into two, xs being the
+					  -- rest of the list
+					  --
+					  -- So xs (tail) is used in the 'otherwise' case
+
+ | sid == id = Just (score) -- Case where the sid is found, then print the score
+ | otherwise = findInRecords sid xs
+
+
+-- TASK 3 --
+-- Creation of a binary tree and then traversal sing DFS post-order
+
+data BinTree = Node (IntTree Int) (IntTree Int) | Leaf Int -- using Node Constructor for node, OR using Leaf
+                                               -- constructor for the leaf, which expects a type Int
+
+-- Now, creation of function to traverse the binary tree in post-order using DFS
+traverseTree :: BinTree
