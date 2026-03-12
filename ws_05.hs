@@ -99,3 +99,7 @@ addRecord :: StuRecord -> Database -> Database
 addRecord rec (Database records) = Database(rec:records) -- Append record to the db
 
 
+findScoreById :: Int -> Database -> Maybe Int -- Type definition, may return St grade
+findScoreById id (Database records) =
+ lookup id [tuple | Record tuple <- records]
+
