@@ -20,3 +20,9 @@ foldrSum numList = foldr (+) 0 numList -- foldr always needs a base number/value
 				       -- e.g foldrSum [1..3] --> 3+(2+(0+1))
 
 
+-- Get the length of a list (without using length function)
+-- Using foldr
+getLen :: [a] -> Int -- Type definition
+getLen xs = foldr (\x acc -> acc + 1) 0 xs -- foldr (function) (base val) (list)
+
+

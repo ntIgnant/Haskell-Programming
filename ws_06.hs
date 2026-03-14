@@ -26,3 +26,45 @@ customCheck str
 
 customLen :: [String] -> [String]
 customLen stLs = filter customCheck stLs
+
+-- 3.)
+getOdds :: Integral a => [a] -> [a]
+getOdds xs = filter odd xs
+
+squareVals :: Num a => [a] -> [a]
+squareVals xs = map (^2) xs
+
+customComp :: Integral a => [a] -> [a]
+customComp xs = (squareVals . getOdds) xs -- composition out of getOdds and
+                                          -- squareVals functions. NOTE: the
+					  -- composition is between parenthesis
+					  -- (funct1 . funct2)
+
+divTwo :: Integral a => [a] -> [a]
+divTwo xs = filter (\x -> x `mod` 2 == 0) xs -- so if it is divisible
+                                                -- by 2. '/=' -> '!='
+
+divThree :: Integral a => [a] -> [a]
+divThree xs = filter (\x -> x `mod` 3 == 3) xs -- the values that are
+                                                -- divisible by 3
+						-- '!=' in haskell is '/='
+
+secondCustomComp :: Integral a => [a] -> [a]
+secondCustomComp xs = (divThree . divTwo) xs
+
+-- NOTE: The order of the functions in the composition are 'switched' because
+-- of the composition function (.) definition ':t'
+--
+-- "(.) :: (b -> c) -> (a -> b) -> a -> c"
+--
+--          Second F -> Fist F
+--
+
+-- 4.)
+flatten :: [[a]] -> [a]
+flatten xs = foldr (++) [] xs
+
+customTakeWhile :: 
+
+-- PART 2 --
+-- 1.)
