@@ -20,7 +20,7 @@ foo :: [a] -> Int -> Int
 foo [] v     = v
 foo (x:xs) v = foo xs (v + 1)
 
--- Answer: Yes
+-- Answer: Yes / No
 
 
 -- The remaining three questions are based on the following type:
@@ -28,14 +28,14 @@ data RateUnit = Weekly | Daily
   deriving (Show)
 
 -- 3. Is the above type recursive?
--- Answer: No
+-- Answer: Yes / No
 
 -- 4. Is the above type polymorphic?
--- Answer: Yes
+-- Answer: Yes / No
 
 -- 5. Consider two values, a and b, of type RateUnit.
 --    Would the expression a > b result in an error?
--- Answer: No
+-- Answer: Yes / No
 
 
 --------------------------------------------------

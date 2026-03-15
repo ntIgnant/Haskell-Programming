@@ -64,7 +64,15 @@ secondCustomComp xs = (divThree . divTwo) xs
 flatten :: [[a]] -> [a]
 flatten xs = foldr (++) [] xs
 
-customTakeWhile :: 
+-- customTakeWhile :: 
 
 -- PART 2 --
 -- 1.)
+get_first_char :: String -> Int -- Type definition
+get_first_char xs = head xs -- get the first character of the 'char list'/string
+
+
+
+count_initials :: [String] -> [(Char, Int)] -- Type definition
+count_initials x:xs = get_first_char x
+ return
