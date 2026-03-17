@@ -68,11 +68,29 @@ flatten xs = foldr (++) [] xs
 
 -- PART 2 --
 -- 1.)
-get_first_char :: String -> Int -- Type definition
-get_first_char xs = head xs -- get the first character of the 'char list'/string
+-- NOTE: In Haskell, normally the values are altered, instead of creating new values (local vars)
 
+-- Okay, so the function will get a ist of strings
+-- then, create a list just with the
+{-
+starts_with :: String -> String -> Bool -- Type definition. This function will work with filter
+starts_with x y -- String, 'Char' but it's easier to work with Strings for the type of return
+ | (head x) == y = True -- Case where the String beginns with the char
+ | otherwise False -- It doesn't beginn with
 
+count_starts :: -- To count HOW MANY starts, a character has. Returns a boolean (Char, Int)
+-}
 
 count_initials :: [String] -> [(Char, Int)] -- Type definition
-count_initials x:xs = get_first_char x
- return
+count_initials [] = [] --  base case for the recursion
+count_initials (x:xs) = (ch, count ch (x:xs)) : count_initials rest
+ where
+  ch = head x
+  rest = filter (\w -> head w /= ch) xs -- so, keep the initial char of the words that does't beggin with the current 'ch'
+
+
+-- Helpter function
+count :: Char -> [String] -> Int -- Type definition
+count c = length . filter (\w -> head w == c)
+
+
