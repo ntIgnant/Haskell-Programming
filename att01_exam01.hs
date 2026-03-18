@@ -92,8 +92,9 @@ foldl_version xs =
  in foldl ((-) . abs) 0 rev
 
 compr_version :: Num a => [a] -> a -- Type definition
-compr_version xs = [abs x | x <- xs]
-compr_version xs = sum xs
+compr_version xs = 
+ let lista = [abs x | x <- xs]
+ in sum lista
 
 
 --------------------------------------------------
@@ -122,4 +123,22 @@ write the most general type for all your functions.
 shift :: Num a => [a] -> [a]
 shift [] = []
 shift (x:xs) = xs ++ [x]
+
+-- Exercise 1.)
+dot_prod :: [Int] -> [Int] -> Int -- Type definition
+dot_prod xs ys =
+ let lista = zipWith (*) xs ys -- create a combineation of [x0*y8, x1*y2,...]
+ in sum lista
+
+
+-- Exercise 2.)
+dot :: [Int] -> [Int] -> Int
+dot xs ys = sum (zipWith (*) xs ys) -- Dot product of two lists
+
+correlation :: [Int] -> [Int]
+correlation zs = trav zs (length zs)
+ where
+  -- 'trav' function definition as 'local variable'
+  trav _ 0 = []
+  trav ls n = dot zs ls : trav (shift ls) (n - 1) 
 
