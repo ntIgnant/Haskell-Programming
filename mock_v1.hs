@@ -12,7 +12,7 @@ fun x
   | x < 0     = x + 2
   | otherwise = x
 
--- Answer: Yes / No
+-- Answer: Yes
 
 
 -- 2. Is the following function tail recursive?
@@ -35,7 +35,7 @@ data RateUnit = Weekly | Daily
 
 -- 5. Consider two values, a and b, of type RateUnit.
 --    Would the expression a > b result in an error?
--- Answer: No
+-- Answer: Yes
 
 
 --------------------------------------------------
@@ -101,11 +101,21 @@ habits_rate =
   ]
 
 -- Write your answers below:
-rec_version = undefined
+rec_version :: [(Float, RateUnit)] -> [Double] -- Type definition
+rec_version [] = [] -- base case for the recursion
+-- Unpack the values of the list of tuples
+rec_version ((r, ru):xs) = (realToFrac r * realToFrac (conv ru)) : rec_version xs
 
-tail_version = undefined
+{-
+tail_version :: [(Float, RateUnit)] -> [Double]
+tail_version [] = [] -- Base case for the recursion
+tail_version ((r, ru):xs) =
+ let converted = xs : (realToFrac r * realToFrac (conv ru))
+ in rev converted
+-}
 
-map_version = undefined
+map_version  :: [(Float, RateUnit)] -> [Double]
+map_version xs = map (\(r, ru) -> realToFrac r * realToFrac(conv ru)) xs
 
 foldr_version = undefined
 

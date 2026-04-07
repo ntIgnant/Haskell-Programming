@@ -12,7 +12,7 @@ fun x
   | x >= 10 = x + 1
   | x >= 0  = x + 2
 
--- Answer: yes/No ????
+-- Answer: No
 
 
 -- 2. Is the following function tail recursive?
@@ -69,32 +69,30 @@ abs :: Num a => a -> a
 -}
 
 
-rec_version :: Num a => [a] -> a -- Type definition
-rec_version [] = 0 -- base case
-rec_version (x:xs) = abs x + rec_version xs
+rec_version :: Num a => [a] -> [a] -- Type definition
+rec_version [] = [] -- base case
+rec_version (x:xs) = abs x : rec_version xs
 
-tail_version :: Num a => [a] -> a -- Type defintion
-tail_version [] = 0 -- Base case | list after 'breakdown'
-tail_version (x:xs) = tail_version xs + abs x
+tail_version :: Num a => [a] -> [a] -- Type defintion
+tail_version xs = trav xs []
+ where
+  trav [] acc = reverse acc
+  trav (x:xs) acc = trav xs (abs x : acc)
 
-map_version :: Num a => [a] -> a
-map_version xs =
- let abs_list = map abs xs -- this returns a list with absolute values
+map_version :: Num a => [a] -> [a]
+map_version xs = map abs xs -- this returns a list with absolute values
  			   -- NOTE: map expects 
- in sum abs_list
 
-foldr_version :: Num a => [a] -> a -- Type definition
-foldr_version xs = foldr ((+) . abs) 0 xs
+foldr_version :: Num a => [a] -> [a] -- Type definition
+foldr_version = foldr (\x acc -> abs x : acc) []
 
 foldl_version :: Num a => [a] -> a -- Type definition
 foldl_version xs = 
  let rev = reverse xs
  in foldl ((-) . abs) 0 rev
 
-compr_version :: Num a => [a] -> a -- Type definition
-compr_version xs = 
- let lista = [abs x | x <- xs]
- in sum lista
+compr_version :: Num a => [a] -> [a] -- Type definition
+compr_version xs = [abs x | x <- xs]
 
 
 --------------------------------------------------
@@ -132,13 +130,15 @@ dot_prod xs ys =
 
 
 -- Exercise 2.)
-dot :: [Int] -> [Int] -> Int
-dot xs ys = sum (zipWith (*) xs ys) -- Dot product of two lists
+dot_prod :: Num a => [a] -> [a] -> a
+dot_prod xs ys = sum (zipWith (*) xs ys)
 
-correlation :: [Int] -> [Int]
-correlation zs = trav zs (length zs)
- where
-  -- 'trav' function definition as 'local variable'
-  trav _ 0 = []
-  trav ls n = dot zs ls : trav (shift ls) (n - 1) 
+shift :: [a] -> [a]
+shift [] = []
+shift (x:xs) = xs ++ [x]
 
+correlation :: Num a => [a] -> [a]
+correlation zs = go zs (length zs)
+  where
+    go _ 0 = []
+    go ls n = dot_prod zs ls : go (shift ls) (n - 1)
