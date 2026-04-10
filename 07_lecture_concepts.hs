@@ -56,3 +56,42 @@ distanceLet x y =
  let x2 = x^2
      y2 = y^2
  in sqrt(x2 + y2)
+
+-- List Comprehension
+-- xs = [expression | generator, condition] | General structure for list comphrenesion
+
+squares :: Int -> [Int] -- Type definition | get the list of squares from 1 to n (input num)
+squares x = [v^2 | v <- [1..x]]
+
+cubes :: Int -> [Int] -- Type definition | get the list of cubes from 1 to n (input number)
+cubes x = [v^3 | v <- [1..x]]
+
+basic = [x | x <- [5..8]] -- Just generate a hardcoded list (no type definition)
+
+doubleVals :: Int -> [Int] -- Type definition | generate a list of doubles from 1 to n (input value)
+doubleVals x = [x*2 | x <- [1..x]]
+
+-- NOTE: This exercise requires condition
+-- From que definition of List Comprehension: xs = [expression | generator, condition]
+-- So the if statement (or filter) goes as the last value
+onlyOdds x = [v | v <- [1..x], odd v]
+
+-- Generate a list of numbers that are only greater than 11
+gt11 :: [Int] -> [Int]
+gt11 xs = [v | v <- xs, v > 11]
+
+keepUpper :: String -> String -- Type definition | keep only the uppercase characters from a given str
+keepUpper charLs = [v | v <- charLs, v >= 'A' && v <= 'Z']
+
+-- The zip function
+-- :t zip :: [a] -> [b] -> [(a, b)]
+-- zip takes two lists, adn combines them as a list of pairs
+-- NOTE: If lists are of different length, zip stops at the shortest one
+
+getIndices :: String -> [(Int, Char)] -- Type definition | Make a list containing the index, char
+				      --                   of a given String (list of Chars)
+getIndices charLs = zip [0..length(charLs)] charLs
+
+getIndexEven :: [Int] -> [(Int, Int)] -- Type definition | Make a list of the indices of the even numbers
+                                      --                   of a list.
+getIndexEven xs = ...
