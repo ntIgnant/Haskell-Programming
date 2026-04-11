@@ -83,6 +83,9 @@ gt11 xs = [v | v <- xs, v > 11]
 keepUpper :: String -> String -- Type definition | keep only the uppercase characters from a given str
 keepUpper charLs = [v | v <- charLs, v >= 'A' && v <= 'Z']
 
+evenSquares :: [Int] -> [Int]
+evenSquares xs = [v^2 | v <- xs, v `mod` 2 == 0]
+
 -- The zip function
 -- :t zip :: [a] -> [b] -> [(a, b)]
 -- zip takes two lists, adn combines them as a list of pairs
@@ -92,6 +95,11 @@ getIndices :: String -> [(Int, Char)] -- Type definition | Make a list containin
 				      --                   of a given String (list of Chars)
 getIndices charLs = zip [0..length(charLs)] charLs
 
+{-
 getIndexEven :: [Int] -> [(Int, Int)] -- Type definition | Make a list of the indices of the even numbers
                                       --                   of a list.
-getIndexEven xs = ...
+getIndexEven xs = 
+-}
+
+pairSums :: [Int] -> [Int] -> [Int] -- Type definition | a list where each element is the sum of the zip
+pairSums xs xy= map(\(x, y) -> x + y) (zip xs xy)
