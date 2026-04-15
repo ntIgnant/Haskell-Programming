@@ -21,6 +21,30 @@ main = do
 
 -- So all the functions with ... :: IO()
 
+{-
+main :: IO() -- Function Type definition | IO Action (takes input and treats the values as 'special')
+main = do
+ putStr "Hello" -- print like
+-}
 
+{-
+main :: IO() -- Function type definition | IO Action (takes input and 'encapsulates' the IO vals)
+main = do
+ putStr "Type your username: "
+ username <- getLine -- Get line from input, and assign the value to var 'username'
+ 
+ putStr "Now, please enter a Password: "
+ password <- getLine -- Get line frm input, and assign the value to var 'passwor'
 
+ putStr ("Welcome " ++ username ++ " your password is " ++ password)
+-}
 
+-- Okay so for the previous examples, return/pure was not needed because putStr handles the
+-- 'IO conversion' automatically, but for the most of the cases, we need to convert the value
+-- manually to 'IO type', we do that conversion by using 'return' or 'pure' delcaration
+
+main :: IO() -- Functioin type deflcaration | IO Action (Takes input and 'encapuslates' the IO value)
+main = do
+ input <- getLine
+ let secretPassword = "holabola"
+ if input != secretPassword
