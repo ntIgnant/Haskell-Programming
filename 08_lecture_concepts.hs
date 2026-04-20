@@ -43,8 +43,74 @@ main = do
 -- 'IO conversion' automatically, but for the most of the cases, we need to convert the value
 -- manually to 'IO type', we do that conversion by using 'return' or 'pure' delcaration
 
+{-
 main :: IO() -- Functioin type deflcaration | IO Action (Takes input and 'encapuslates' the IO value)
 main = do
  input <- getLine
  let secretPassword = "holabola"
- if input != secretPassword
+ if input /= secretPassword -- in haskell, '!=' -> '/='
+  then putStrLn "Wrong Password"
+  
+  -- Case where input == secretPassword
+  else putStrLn "Access Granted"
+
+-- For if statements, if initializes the expression, folowed by and then, and else
+-- if
+--  then
+--  else
+-}
+
+-- Okay, so now I need to create a script that gets user data (e.g name, age, password, etc) using main
+-- and specific functions for each of the input values
+
+{-
+get_username :: IO String -- Function definition | IO String datatype (get and return)
+get_username = do
+ input <- getLine
+ return input -- Return the username (IO String type)
+
+get_userage :: IO Int -- function type definition | IO Int datatype
+get_userage = do
+ ageVal <- getLine -- Get the user age from input
+ return (read ageVal) -- Return the age to the caller (IO Int)
+
+get_userpassword :: IO String -- function type definition | IO String datatype
+get_userpassword = do
+ pssVal <- getLine -- Get user password from input
+ return pssVal -- Return the password to the caller (IO String)
+
+main = do
+ putStrLn "Hey, please type your username: "
+ 
+ username <- get_username -- call function to get the username
+ 
+ putStrLn ("Got it " ++ username)
+ putStrLn "Now, please enter your Age: "
+
+ userage <- get_userage
+
+ putStrLn ("Okay so you are " ++ (show userage) ++ " years old, quite old ngl")
+ putStrLn "Enter your last password: "
+
+ userpss <- get_userpassword
+
+ -- Assignation of user lasts password
+ let stored_password = "pilin" -- in this case 'let' doesn't require an 'in' because 'in' is only
+                               -- required when there is no 'do', so:
+			       -- 	let ... in
+			       -- 	do ... let (no need of in)
+
+ if userpss /= stored_password
+  then putStrLn "WRONG PASSWORD"
+    
+  else putStrLn "ACCESS GRANTED"
+
+-}
+
+-- About IO() type definition
+
+-- IO String → reads input, produces a String
+-- IO Int → does IO, produces an Int
+-- IO () → does IO, produces nothing meaningful
+
+
