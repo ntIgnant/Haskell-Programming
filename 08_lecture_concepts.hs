@@ -78,6 +78,9 @@ get_userpassword :: IO String -- function type definition | IO String datatype
 get_userpassword = do
  pssVal <- getLine -- Get user password from input
  return pssVal -- Return the password to the caller (IO String)
+-}
+
+{-
 
 main = do
  putStrLn "Hey, please type your username: "
@@ -113,4 +116,20 @@ main = do
 -- IO Int → does IO, produces an Int
 -- IO () → does IO, produces nothing meaningful
 
+-- Create a program that prompts the user to enter a value in centimeters, and returns the converted
+-- value into inches
 
+get_usercm :: IO Float -- Function type definition | gets the value of the user (as IO Int)
+get_usercm = do
+ val <- getLine -- get user input
+ return (read val) -- return the value to the caller (type IO Int)
+
+
+-- So basically I can use '<-' variable assignation if I'm using 'do'
+main = do
+ putStrLn "Please enter a value in cm: "
+ usercm <- get_usercm -- get the value of the user from input
+
+ -- Now, convert the usercm into inches
+ let inchesVal = usercm / 2.54 -- may have a problem with the datatype (Float?)
+ putStrLn ((show usercm) ++ "cm are " ++ (show inchesVal) ++ " inches.")
