@@ -119,6 +119,7 @@ main = do
 -- Create a program that prompts the user to enter a value in centimeters, and returns the converted
 -- value into inches
 
+{-
 get_usercm :: IO Float -- Function type definition | gets the value of the user (as IO Int)
 get_usercm = do
  val <- getLine -- get user input
@@ -133,3 +134,41 @@ main = do
  -- Now, convert the usercm into inches
  let inchesVal = usercm / 2.54 -- may have a problem with the datatype (Float?)
  putStrLn ((show usercm) ++ "cm are " ++ (show inchesVal) ++ " inches.")
+
+-}
+
+-- Menu Driven Program Creation
+-- Clarifications:
+-- 	IO a = a recipe for doing something
+--      do = how you combine multiple steps into one recipe
+--
+
+show_options :: IO() -- Type definition | IO type because It will just print out a value
+show_options = do
+
+ -- Options of the Menu Program
+ putStrLn "1) Push a number on the Stack"
+ putStrLn "2) Add the top two numbers on the stack"
+ putStrLn "3) Print all the values on the stack"
+ putStrLn "4) Exit"
+
+main :: IO() -- Type definition | IO() because ... 
+main = do
+ let index_list = [x | x <- [1..4]] -- list for the available indexes (for error handling)
+ -- list comprehensions Structure:
+ -- 	myList = [expression | generator, conditions]
+
+ show_options -- Call function to print the menu options
+
+ putStr "\nSelect an option (index): " -- putStr used instead of putStrLn to avoid newline-char
+ user_option <- getLine -- '<-' allowed because 'do' is being used
+ 
+ -- Convert the user_option into int datatype
+ let int_option = read user_option :: Int
+
+ -- Error handling for input (index boundaries)
+ if int_option < 1 || int_option > 4
+  then putStrLn "Invalid Option (out of range)"
+  
+  else putStrLn (user_option)
+
