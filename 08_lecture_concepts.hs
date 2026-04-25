@@ -143,6 +143,8 @@ main = do
 --      do = how you combine multiple steps into one recipe
 --
 
+{-
+
 show_options :: IO() -- Type definition | IO type because It will just print out a value
 show_options = do
 
@@ -171,4 +173,68 @@ main = do
   then putStrLn "Invalid Option (out of range)"
   
   else putStrLn (user_option)
+
+-}
+
+-- Menu Driven Program (Stack like creation/printing)
+
+-- NOTE:
+-- 	IO() --> no meaningfull data type result (just IO related)
+-- 	IO String --> an action that produces a String (also IO related)
+
+show_menu :: IO() -- Type definition | show all the options of the menu
+show_menu = do -- 'do' must be used when mutiple IO related actions are performed 
+ putStrLn "1) Push a number on the stack"
+ putStrLn "2) Add the top two numbers on the stack"
+ putStrLn "3) Print all the values on the stack"
+ putStrLn "4) Exit"
+
+get_user_choice :: IO String -- Type definition | the user will enter a value 'String' in the IO() stream
+get_user_choice = do
+ 
+ -- Usage of putStr instead of putStrLn to avoid newlinechar at the end of the line
+ putStr "Enter Option: "
+ input <- getLine -- NOTE: '<-' can only be used inside the 'do' block
+ return input -- return the input to the caller
+
+main :: IO()
+main = do
+ let stack = [] -- Create a 'global' list to work as the stack (should it go as arg?)
+
+ -- Show the menu options
+ -- This will also work as the base case for the recursion (show menu options)
+ show_menu
+
+ -- Get user choice
+ user_input <- get_user_choice
+ let int_input = read(user_input) -- Create a new variable containing the user input AS INT (for range eval)
+ 
+ -- Verify the user choice (index range)
+ if int_input < 0 || int_input > 4
+  then do
+   putStrLn "Invalid Choice!"
+   
+   -- Excecute main to show up the menu again (recursively)
+   main
+
+   else return () -- this works as a 'do nothing'
+   		  -- NOTE: else must ALWAYS return something
+ 
+ -- Evaluate Options based in user choice
+ -- use case (similar to C) to evaluate numerous options/cases
+
+ -- TODO: Create the functions for each of the cases, and execute them
+
+ case int_input of
+  1 -> putStrLn "PUSH!"
+  2 -> putStrLn "ADD!"
+  3 -> putStrLn "PRINT"
+  4 -> putStrLn "EXIT"
+  _ -> do
+   putStrLn "Invalid Choice!"
+   main -- recursive call
+ 
+ 
+ 
+
 
