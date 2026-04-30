@@ -1,3 +1,5 @@
+import System.IO -- for withFile file handler (read/write from external files)
+
 -- IO Actions are meant to be used with input/output
 --
 -- Compared to pure functions e.g sym :: Int -> ...., an IO Action
@@ -182,6 +184,8 @@ main = do
 -- 	IO() --> no meaningfull data type result (just IO related)
 -- 	IO String --> an action that produces a String (also IO related)
 
+{-
+
 show_menu :: IO() -- Type definition | show all the options of the menu
 show_menu = do -- 'do' must be used when mutiple IO related actions are performed 
  putStrLn "1) Push a number on the stack"
@@ -234,7 +238,30 @@ main = do
    putStrLn "Invalid Choice!"
    main -- recursive call
  
- 
- 
+-}
 
+-- Some IO file path handling (read/write/append from external path)
+-- AS an external file is not 'pure', it is handled and wrapped with IO()
 
+-- withFile :: FilePath -> IOMode -> (Handle -> IO r) -> IO r
+-- NOTE: Automatically closes the file when finishes...
+{-
+main :: IO() -- Type definition
+main =
+ withFile "test.txt" ReadMode $ \h -> do
+  line <- hGetLine h
+  putStrLn line
+-}
+
+-- Excercise, read and format from input file
+
+getContent :: IO String -- Type defnition | reads from IO AND returns a String so IO String
+getContent =
+ withFile "movies.txt" ReadMode $ \h -> do
+  line <- hGetLine h -- get line from the file | NOTE: h works as a "f" in python for reading the file
+  return line -- Return the line to the caller
+
+main :: IO() -- type definition for main
+main = do
+ line <- getContent
+ putStrLn line
