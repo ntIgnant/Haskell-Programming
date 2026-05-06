@@ -1,6 +1,7 @@
 import Data.Char (toUpper)
 import Data.List
 import Data.Maybe
+import Control.Exception -- For runtime erros 'catching'
 
 -- Haskell Libraries
 -- Major top-level categories include:
@@ -66,5 +67,35 @@ main = do
 
 
 -- Exceptions
+-- In Haskell, there are two scenarios (types) of errors
+-- 	Exeptional errors (Runtime Errors) - unusual failures that interrupt execution
+-- 	Pure errors (Expected Errors) - "this computation might fail" but are expected in the logic
+--
+--
+-- Exeptional errors (catch)
 
+-- The Structure of catch: catch action handler
+
+-- e.g catch
+main :: IO()
+main = do
+ 
+ let my_num = 5
+
+ putStr "Please enter a number (5/x): "
+ user_input <- getLine
+
+ -- Handle the error if x = 0
+ catch
+  (do
+   let result = my_num `div` (read user_input)
+   print result
+  )
+
+   handler -- call handler as fallback (if there is an error like zero division)
+
+
+handler :: ArithException -> IO() -- treat handler as a function | using type declaration as the err
+handler e =
+ putStrLn "Arithmetic Error | Cannot divide by zero!"
 
