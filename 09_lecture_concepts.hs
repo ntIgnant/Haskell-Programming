@@ -77,6 +77,7 @@ main = do
 -- The Structure of catch: catch action handler
 
 -- e.g catch
+{-
 main :: IO()
 main = do
  
@@ -98,4 +99,6 @@ main = do
 handler :: ArithException -> IO() -- treat handler as a function | using type declaration as the err
 handler e =
  putStrLn "Arithmetic Error | Cannot divide by zero!"
+
+-}
 
