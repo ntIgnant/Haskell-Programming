@@ -1,7 +1,21 @@
 -- Haskell Practice Set — Week 3 Style
 -- Topics: type signatures, type classes, numeric types, tuples, sorting
 
--- Based on: lzscc212_workshop_03.pdf
+-- Some Information Related to Types...
+
+-- Overloaded Functions:
+--  Functions that work with multiple types
+--  e.g (+) Num a => a -> a -> a | '+' works with any type 'a' as long as it is a 'Num'
+
+-- Type Classes:
+-- A type class describe a group of types that support certain operations
+
+-- Eq -> Types whos values can be checked for equality (==) (/=)
+-- Ord -> Types whos values can be Ordered or Compared (>) (<) (=>) (>=)
+-- Show -> Types whos values can be transformed to strings e.g 123 to "123" or 3.14 to "3.14"
+-- Read -> Types whos values can be formed FROM string e.g "1.43" to 1.43 | NOTE: haskell needs to know the conversion type
+-- Integral -> Types whos values are Whole-Numbers
+-- Fractional -> Types that supports decimal/fractional
 
 -- ------------------------------------------------------------
 -- 1. my_len_double
@@ -59,7 +73,7 @@ safe_average xs = fromIntegral (sum xs) / fromIntegral(length xs)
 -- -- 1
 
 -- Use the built-in min function.
-minim :: [Int] -> Int
+minim :: Ord a => [a] -> a
 minim [x] = x -- Base case, for when the list has only 1 item
 minim (x:xs) = min x (minim xs)
 
@@ -74,6 +88,10 @@ minim (x:xs) = min x (minim xs)
 
 -- Use the built-in max function.
 
+maxims :: Ord a => [a] -> a -- Using Ord type class to make the function functional for all comparable/orderable values
+maxims [x] = x -- Base case
+maxims (x:xs) = max x (maxims xs)
+
 -- ------------------------------------------------------------
 -- 6. range_list
 
@@ -86,6 +104,11 @@ minim (x:xs) = min x (minim xs)
 
 -- Think carefully about the type signature.
 
+range_list :: (Ord a, Num a) => [a] -> a -- Here, both Ord and Num type classes need to be defined
+                                         -- because in the function, two operations are used. 
+                                         -- maximum/minimum (which require Ord type class) and '-' (which require Num type class) 
+range_list xs = maxims xs - minim xs
+
 -- ------------------------------------------------------------
 -- 7. count_above
 
@@ -95,6 +118,13 @@ minim (x:xs) = min x (minim xs)
 -- Example:
 -- count_above 50 [40,60,70,20]
 -- -- 2
+
+count_above :: Ord a => a -> [a] -> Int
+count_above n [] = 0 -- Base case "If there is just one element, return it and don't call again"
+
+count_above n (x:xs)
+    | x > n = 1 + count_above n xs
+    | otherwise = count_above n xs
 
 -- ------------------------------------------------------------
 -- 8. pass_fail
@@ -125,6 +155,12 @@ minim (x:xs) = min x (minim xs)
 -- Example idea:
 -- student_grades :: [(String, [Double])]
 
+type Studentgrades = [(String, [Double])] -- Note, the name for a type MUST start with uppercase
+
+-- Create an instance of the custom type
+stud_grades_01 :: Studentgrades
+stud_grades_01 = [("Alice", [85, 55, 62.5]), ("Bob", [45, 65.3, 72])]
+
 -- ------------------------------------------------------------
 -- 10. student_average
 
@@ -134,6 +170,14 @@ minim (x:xs) = min x (minim xs)
 -- Example:
 -- student_average ("Alice", [85,55,62.5])
 -- -- ("Alice", 67.5)
+
+student_average :: (Fractional a, Num a) => (String, [a]) -> (String, a)
+student_average (name, grades) = let
+    avg_grade = sum grades / fromIntegral (length grades) -- get the average grade of the list
+                                                          -- fromIntegral is used here to convert from
+                                                          -- Int to Double because (/) does't support
+                                                          -- Type Int
+    in (name, avg_grade)
 
 -- ------------------------------------------------------------
 -- 11. all_averages
